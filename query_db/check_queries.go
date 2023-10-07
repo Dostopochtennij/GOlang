@@ -11,6 +11,21 @@ import (
 
 const (
 	port = 5432
+	user, _ := os.LookupEnv("USER_DB")
+	password, _ := os.LookupEnv("PASS_DB")
+	dbname, _ := os.LookupEnv("NAME_DB")
+	transCashError, _ := os.LookupEnv("SELECT_TR_C_ERR")
+	endConDB, _ := os.LookupEnv("SELECT_END_CON_DB")
+	freezeQueryDB, _ := os.LookupEnv("SELECT_FREEZY_QUERY")
+	sendErrorIDOC, _ := os.LookupEnv("SELECT_ERROR_IDOC")
+	defferProd, _ := os.LookupEnv("SELECT_DEFFER_PROD")
+	endOfDay, _ := os.LookupEnv("SELECT_END_OF_DAY")
+	remains, _ := os.LookupEnv("SELECT_REMAINS")
+	duplicateTickets, _ := os.LookupEnv("SELECT_DUPL_TICKETS")
+	zeroTickets, _ := os.LookupEnv("SELECT_ZERO_TICKETS")
+	alcoProhib, _ := os.LookupEnv("SELECT_ALCO_PROHIB")
+	alcoMRC, _ := os.LookupEnv("SELECT_ALCO_MRC")
+	absentEGAIS, _ := os.LookupEnv("SELECT_ABSENT_EGAIS")
 )
 
 func init() {
@@ -26,10 +41,6 @@ func CheckError(err error) {
 }
 
 func conn_db(host string, query string) {
-
-	user, _ := os.LookupEnv("USER_DB")
-	password, _ := os.LookupEnv("PASS_DB")
-	dbname, _ := os.LookupEnv("NAME_DB")
 
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
@@ -59,18 +70,6 @@ func conn_db(host string, query string) {
 }
 
 func main() {
-	transCashError, _ := os.LookupEnv("SELECT_TR_C_ERR")
-	endConDB, _ := os.LookupEnv("SELECT_END_CON_DB")
-	freezeQueryDB, _ := os.LookupEnv("SELECT_FREEZY_QUERY")
-	sendErrorIDOC, _ := os.LookupEnv("SELECT_ERROR_IDOC")
-	defferProd, _ := os.LookupEnv("SELECT_DEFFER_PROD")
-	endOfDay, _ := os.LookupEnv("SELECT_END_OF_DAY")
-	remains, _ := os.LookupEnv("SELECT_REMAINS")
-	duplicateTickets, _ := os.LookupEnv("SELECT_DUPL_TICKETS")
-	zeroTickets, _ := os.LookupEnv("SELECT_ZERO_TICKETS")
-	alcoProhib, _ := os.LookupEnv("SELECT_ALCO_PROHIB")
-	alcoMRC, _ := os.LookupEnv("SELECT_ALCO_MRC")
-	absentEGAIS, _ := os.LookupEnv("SELECT_ABSENT_EGAIS")
 
 	m := make(map[string]string)
 	m["TransactionCacheError"] = transCashError
