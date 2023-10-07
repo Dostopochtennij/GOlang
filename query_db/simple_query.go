@@ -1,17 +1,16 @@
 package main
 
 import (
-    "context"
-    "crypto/tls"
-    "fmt"
-    "log"
-  	"log"
-  	"os"
-  
-  	"github.com/joho/godotenv"
-  	_ "github.com/lib/pq"
-    "github.com/ClickHouse/clickhouse-go/v2"
-    "github.com/ClickHouse/clickhouse-go/v2/lib/driver"
+	"context"
+	"crypto/tls"
+	"fmt"
+	"log"
+	"os"
+	
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+	"github.com/ClickHouse/clickhouse-go/v2"
+	"github.com/ClickHouse/clickhouse-go/v2/lib/driver"
 )
 
 func init() {
@@ -21,38 +20,38 @@ func init() {
 }
 
 func main() {
-    conn, err := connect()
-    if err != nil {
-        panic((err))
-    }
-
-    ctx := context.Background()
-    rows, err := conn.Query(ctx, "SELECT name,toString(uuid) as uuid_str FROM system.tables LIMIT 5")
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    for rows.Next() {
-        var (
-            name, uuid string
-        )
-        if err := rows.Scan(
-            &name,
-            &uuid,
-        ); err != nil {
-            log.Fatal(err)
-        }
-        log.Printf("name: %s, uuid: %s",
-            name, uuid)
-    }
+	conn, err := connect()
+	if err != nil {
+		panic((err))
+	}
+	
+	ctx := context.Background()
+	rows, err := conn.Query(ctx, "SELECT name,toString(uuid) as uuid_str FROM system.tables LIMIT 5")
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	for rows.Next() {
+	var (
+	    name, uuid string
+	)
+	if err := rows.Scan(
+	    &name,
+	    &uuid,
+	); err != nil {
+	    log.Fatal(err)
+	}
+	log.Printf("name: %s, uuid: %s",
+	    name, uuid)
+	}
 
 }
 
 func connect() (driver.Conn, error) {
   
-    user, _ := os.LookupEnv("USER_DB")
+	user, _ := os.LookupEnv("USER_DB")
   	password, _ := os.LookupEnv("PASS_DB")
-  	dbname, _ := os.LookupEnv("NAME_DB")
+	dbname, _ := os.LookupEnv("NAME_DB")
     
   var (
         ctx       = context.Background()
